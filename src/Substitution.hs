@@ -11,13 +11,11 @@ identity = id
 
 -- replace varName with a term
 single :: VarName -> Term -> Subst
---single x (Var y) = \x -> Var y
---single x (Var x) = \x -> Var x
 single varName term = \varName -> term
 
 -- apply the Substitution to given term
 apply :: Subst -> Term -> Term
-apply sub (Var varName) = sub (Var varName)
+apply sub (Var varName)        = sub (Var varName)
 apply sub (Comb combName list) = Comb combName (map (apply sub) list)
 
 -- apply 2 substitutions one after another
