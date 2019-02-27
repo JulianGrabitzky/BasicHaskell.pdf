@@ -16,6 +16,7 @@ below p1 p2 | length p1 > length p2 = True
 -- assumption: positions on same level
 leftOf :: Pos -> Pos -> Bool
 leftOf []       _        = False
+leftOf _        []       = False
 leftOf (p1:p1s) (p2:p2s) | p1 <  p2 = True
                          | p1 >  p2 = False
                          | p1 == p2 = leftOf p1s p2s
@@ -24,11 +25,14 @@ leftOf (p1:p1s) (p2:p2s) | p1 <  p2 = True
 -- assumption: positions on same level
 rightOf :: Pos -> Pos -> Bool
 rightOf []       _        = False
+rightOf _        []       = False
 rightOf (p1:p1s) (p2:p2s) | p1 <  p2 = False
                           | p1 >  p2 = True
                           | p1 == p2 = rightOf p1s p2s
 
--- selectAt :: Term -> Pos -> Term
+selectAt :: Term -> Pos -> Term
+selectAt t [] = t
+selectAt (Var v) [pos] = (Var "null")
 
 -- replaceAt :: Term -> Pos -> Term -> Term
 
