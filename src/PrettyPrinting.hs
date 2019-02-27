@@ -1,6 +1,7 @@
 module PrettyPrinting where
 
 import Data.List
+import Term
 
 class Pretty a where
   pretty :: a -> String
