@@ -6,8 +6,8 @@ import Term
 type Subst = (Term -> Term)
 
 -- just the id function my friend
-indentity :: Subst
-indentity = id
+identity :: Subst
+identity = id
 
 -- replace varName with a term
 single :: VarName -> Term -> Subst
