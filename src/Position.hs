@@ -2,12 +2,15 @@ module Position where
 
 import Term
 
+-- typeclass for the position of the subterm in the term
 type Pos = [Int]
 
+-- checks if the first element is above the second element
 above :: Pos -> Pos -> Bool
 above p1 p2 | length p1 < length p2 = True
             | otherwise             = False
 
+-- checks if the first element is below the second element
 below :: Pos -> Pos -> Bool
 below p1 p2 | length p1 > length p2 = True
             | otherwise             = False
@@ -30,23 +33,25 @@ rightOf (p1:p1s) (p2:p2s) | p1 <  p2 = False
                           | p1 >  p2 = True
                           | p1 == p2 = rightOf p1s p2s
 
+-- select a subtterm at the fiven position within the term
 selectAt :: Term -> Pos -> Term
 selectAt t             []     = t
 selectAt (Var v)       _      = error "The position you are looking for does not exist."
 selectAt (Comb c args) (p:ps) = selectAt (args !! (p-1)) ps
 
+-- replace a given subterm at the given position with another subterm
 replaceAt :: Term -> Pos -> Term -> Term
 replaceAt t1            []     t2 = t2
 replaceAt (Var v)       _      t2 = error "The position you want to replace does not exist."
 replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you want to replace does not exist."
                                   | otherwise       = (Comb c newArgs)
     where newArgs         = firstElements ++ replacedElement ++ lastElements
-          firstElements   = (take (p-1) args) 
+          firstElements   = (take (p-1) args)
           replacedElement = [replaceAt (args !! (p-1)) ps t]
           lastElements    = reverse $ take ((length args)-p) $ reverse args
 
+-- return every position in the given term
 allPos :: Term -> [Pos]
 allPos (Var v) = [[]]
 allPos (Comb c args) = [] : concatMap helper [1..(length args)]
     where helper pos = map (pos:) (allPos $ args !! (pos-1))
-    
