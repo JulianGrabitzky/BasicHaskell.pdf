@@ -49,3 +49,4 @@ allPos :: Term -> [Pos]
 allPos (Var v) = [[]]
 allPos (Comb c args) = [] : concatMap helper [1..(length args)]
     where helper pos = map (pos:) (allPos $ args !! (pos-1))
+    
