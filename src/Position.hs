@@ -45,4 +45,7 @@ replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you wa
           replacedElement = [replaceAt (args !! (p-1)) ps t]
           lastElements    = reverse $ take ((length args)-p) $ reverse args
 
--- allPos :: Term -> [Pos]
+allPos :: Term -> [Pos]
+allPos (Var v) = [[]]
+allPos (Comb c args) = [] : concatMap helper [1..(length args)]
+    where helper pos = map (pos:) (allPos $ args !! (pos-1))
