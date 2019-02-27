@@ -1,7 +1,25 @@
 module Substitution where
 
-data Subst = Subst (Term -> Term)
+import Term
 
-instance Functor Subst where
-    -- fmap :: (Term -> Term) -> Subst Term -> Subst Term
-    fmap 
+-- substitution of two terms
+type Subst = (Term -> Term)
+
+-- just the id function my friend
+indentity :: Subst
+indentity = id
+
+-- replace varName with a term
+single :: VarName -> Term -> Subst
+--single x (Var y) = \x -> Var y
+--single x (Var x) = \x -> Var x
+single varName term = \varName -> term
+
+-- apply the Substitution to given term
+apply :: Subst -> Term -> Term
+apply sub (Var varName) = sub varName
+apply sub (Comb combName list) = Comb combName (map (apply sub) list)
+
+-- apply 2 substitutions one after another
+compose :: Subst -> Subst -> Subst
+compose s1 s2 = s2.s1
