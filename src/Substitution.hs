@@ -17,7 +17,7 @@ single varName term = \varName -> term
 
 -- apply the Substitution to given term
 apply :: Subst -> Term -> Term
-apply sub (Var varName) = sub varName
+apply sub (Var varName) = sub (Var varName)
 apply sub (Comb combName list) = Comb combName (map (apply sub) list)
 
 -- apply 2 substitutions one after another
