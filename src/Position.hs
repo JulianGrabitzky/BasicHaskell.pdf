@@ -31,8 +31,9 @@ rightOf (p1:p1s) (p2:p2s) | p1 <  p2 = False
                           | p1 == p2 = rightOf p1s p2s
 
 selectAt :: Term -> Pos -> Term
-selectAt t [] = t
-selectAt (Var v) [pos] = (Var "null")
+selectAt t             []     = t
+selectAt (Var v)       [pos]  = error "The position you are looking for does not exist." -- invalid input
+selectAt (Comb c args) (p:ps) = selectAt (args !! (p-1)) ps
 
 -- replaceAt :: Term -> Pos -> Term -> Term
 
