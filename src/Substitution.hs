@@ -1,7 +1,6 @@
 module Substitution where
 
 import Term
-import PrettyPrinting
 
 -- substitution of two terms
 type Subst = (Term -> Term)
