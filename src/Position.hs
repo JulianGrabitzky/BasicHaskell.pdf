@@ -32,9 +32,17 @@ rightOf (p1:p1s) (p2:p2s) | p1 <  p2 = False
 
 selectAt :: Term -> Pos -> Term
 selectAt t             []     = t
-selectAt (Var v)       [pos]  = error "The position you are looking for does not exist." -- invalid input
+selectAt (Var v)       _      = error "The position you are looking for does not exist."
 selectAt (Comb c args) (p:ps) = selectAt (args !! (p-1)) ps
 
--- replaceAt :: Term -> Pos -> Term -> Term
+replaceAt :: Term -> Pos -> Term -> Term
+replaceAt t1            []     t2 = t2
+replaceAt (Var v)       _      t2 = error "The position you want to replace does not exist."
+replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you want to replace does not exist."
+                                  | otherwise       = (Comb c newArgs)
+    where newArgs         = firstElements ++ replacedElement ++ lastElements
+          firstElements   = (take (p-1) args) 
+          replacedElement = [replaceAt (args !! (p-1)) ps t]
+          lastElements    = reverse $ take ((length args)-p) $ reverse args
 
 -- allPos :: Term -> [Pos]
