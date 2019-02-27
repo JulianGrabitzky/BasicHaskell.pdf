@@ -8,7 +8,7 @@ class Pretty a where
 instance Pretty Term where
   -- make it fancy
   pretty term | head (prettyHelper term) == '(' = middle (prettyHelper term)
-              | otherwise                     = prettyHelper term
+              | otherwise                       = prettyHelper term
     where
       -- middle :: [String] -> [String]
       -- remove first and last element of a list
