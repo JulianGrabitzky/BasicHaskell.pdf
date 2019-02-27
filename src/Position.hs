@@ -43,7 +43,7 @@ replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you wa
     where newArgs         = firstElements ++ replacedElement ++ lastElements
           firstElements   = (take (p-1) args) 
           replacedElement = [replaceAt (args !! (p-1)) ps t]
-          lastElements    = drop p args
+          lastElements    = reverse $ take ((length args)-p) $ reverse args
 
 allPos :: Term -> [Pos]
 allPos (Var v) = [[]]
