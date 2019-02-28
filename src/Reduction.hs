@@ -17,9 +17,9 @@ findRule (Prog ((Rule left right):rs)) term | left == term = Just (right, substi
 
 reduceAt :: Prog -> Term -> Pos -> Maybe Term
 reduceAt (Prog []) _    _   = Nothing
-reduceAt prog      term pos = (Just rhs)
-    where subterm = selectAt term pos
-          Just (rhs, subst) = findRule prog subterm
+reduceAt prog      term pos = case findRule prog (selectAt term pos) of
+    Nothing -> Nothing
+    Just (rhs, subst) -> Just (replaceAt term pos (apply subst rhs))
 
 -- reduciblePos :: Prog -> Term -> [Pos]
 -- reduciblePos
@@ -35,8 +35,10 @@ r2 = (Rule left2 right2)
 left1 = (Var "x")
 right1 = (Var "1")
 
-right2 = (Var "y")
-left2 = (Comb "add" [(Var "a"), (Var "b")])
+left2 = (Var "y")
+right2 = (Comb "add" [(Var "a"), (Var "b")])
+
+t = (Comb "mul" [(Var "x"), (Comb "add" [(Var "y"), (Var "z"), (Var "w")])])
 
 gimmeDemRight :: Maybe (Rhs, Subst) -> Term
 gimmeDemRight Nothing = error "No right term."
