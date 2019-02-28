@@ -9,7 +9,7 @@ import Data.Maybe
 
 -- make me pretty pls
 findRule :: Prog -> Term -> Maybe (Rhs, Subst)
-findRule (Prog [])              term = Nothing
+findRule (Prog [])                     term = Nothing
 findRule (Prog ((Rule left right):rs)) term | left == term = Just (right, substitution)
                                             | otherwise    = findRule (Prog rs) term
     where substitution = allOrNothing (match term right)
