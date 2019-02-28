@@ -3,7 +3,7 @@
 import PrettyPrinting
 import Test.QuickCheck
 
--- prop_S
+prop_PrettyPrinting :: Term -> Bool
 
 return []
 testAll = $quickCheck
