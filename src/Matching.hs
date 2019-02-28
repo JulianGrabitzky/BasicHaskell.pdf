@@ -10,3 +10,4 @@ match (Var varName) term = Just (single varName term)
 match _             (Var _) = Nothing
 -- WIP
 match (Comb combName1 list1) (Comb combName2 list2) = Nothing
+-- Hallo Justin
