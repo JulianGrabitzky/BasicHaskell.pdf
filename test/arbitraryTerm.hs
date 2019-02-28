@@ -1,10 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 module ArbitraryTerm where
 
-import Term
+import src/Term
 
-instance Arbitrary Term where
-    term = do
+instance Arbitrary Var where
+    var = do
+    a <- elements ['a'..'z']
+    return Var a
 
 
 return []
