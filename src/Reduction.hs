@@ -5,41 +5,37 @@ import Position
 import Matching
 import Substitution
 import Prog
+import Data.Maybe
 
+-- make me pretty pls
 findRule :: Prog -> Term -> Maybe (Rhs, Subst)
 findRule (Prog [])              term = Nothing
 findRule (Prog ((Rule left right):rs)) term | left == term = Just (right, substitution)
                                             | otherwise    = findRule (Prog rs) term
     where substitution = allOrNothing (match term right)
           allOrNothing :: Maybe Subst -> Subst
-          allOrNothing Nothing      = error "No reduction ruls found."
+          allOrNothing Nothing      = error "No reduction rules found."
           allOrNothing (Just subst) = subst
 
+-- reduce the term at the given position
 reduceAt :: Prog -> Term -> Pos -> Maybe Term
 reduceAt (Prog []) _    _   = Nothing
 reduceAt prog      term pos = case findRule prog (selectAt term pos) of
-    Nothing -> Nothing
+    Nothing           -> Nothing
     Just (rhs, subst) -> Just (replaceAt term pos (apply subst rhs))
 
--- reduciblePos :: Prog -> Term -> [Pos]
--- reduciblePos
+-- find all reducable positions of the term
+reduciblePos :: Prog -> Term -> [Pos]
+reduciblePos (Prog []) _ = []
+-- take the first element of each tuple that is not Nothing
+reduciblePos prog term = fst $ unzip $ filter (\x -> isJust (snd x)) (positionAndRule)
+    where
+        -- list of all positions of the term and possible rule
+        positionAndRule = zip (allPos term) (map (findRule prog) subterms)
+        -- list of all subterms
+        subterms = map (selectAt term) (allPos term)
 
--- isNormalForm :: Prog -> Term -> Bool
--- isNormalForm
-
-program = (Prog [r1, r2])
-
-r1 = (Rule left1 right1)
-r2 = (Rule left2 right2)
-
-left1 = (Var "x")
-right1 = (Var "1")
-
-left2 = (Var "y")
-right2 = (Comb "add" [(Var "a"), (Var "b")])
-
-t = (Comb "mul" [(Var "x"), (Comb "add" [(Var "y"), (Var "z"), (Var "w")])])
-
-gimmeDemRight :: Maybe (Rhs, Subst) -> Term
-gimmeDemRight Nothing = error "No right term."
-gimmeDemRight (Just (rhs, subst)) = rhs
+-- determine if a term is in its normal form
+isNormalForm :: Prog -> Term -> Bool
+isNormalForm prog term | reduciblePos prog term == 0 = True
+                       | otherwise = False
