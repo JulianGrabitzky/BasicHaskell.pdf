@@ -11,7 +11,7 @@ identity = id
 
 -- replace varName with a term
 single :: VarName -> Term -> Subst
-single varName term = \varName -> term
+single varName term = (\x -> if x==Var varName then term else x)
 
 -- apply the Substitution to given term
 apply :: Subst -> Term -> Term
