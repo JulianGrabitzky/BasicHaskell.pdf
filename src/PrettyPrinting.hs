@@ -1,6 +1,5 @@
 module PrettyPrinting where
 
-import Data.List
 import Term
 
 class Pretty a where
@@ -23,4 +22,4 @@ instance Pretty Term where
       prettyHelper (Comb name args) = "(" ++ name ++ " " ++ (prettyList args) ++ ")"
       -- prettyList :: [Term] -> String
       -- use pretty on every element on the list
-      prettyList list = intercalate " " (map prettyHelper list)
+      prettyList list = unwords (map prettyHelper list)
