@@ -28,6 +28,12 @@ right2 = (Comb "add" [(Var "a"), (Var "b")])
 
 t = (Comb "mul" [(Var "x"), (Comb "add" [(Var "y"), (Var "z"), (Var "w")])])
 
+t1 = Comb "add" [(Var "x"), (Var "y")]
+t2 = Comb "add" [(Var "1"), (Var "2")]
+
+s1 = single "x" (Var "1") -- \(Var "x") -> (Var "1")
+s2 = single "y" (Var "2") -- \(Var "y") -> (Var "2")
+
 gimmeDemRight :: Maybe (Rhs, Subst) -> Term
 gimmeDemRight Nothing = error "No right term."
 gimmeDemRight (Just (rhs, subst)) = rhs
