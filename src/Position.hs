@@ -21,28 +21,28 @@ below p1 p2 = above p2 p1
 leftOf :: Pos -> Pos -> Bool
 leftOf []       _        = False
 leftOf _        []       = False
-leftOf (p1:p1s) (p2:p2s) | p1 <  p2 = True
-                         | p1 >  p2 = False
-                         | p1 == p2 = leftOf p1s p2s
+leftOf (p1:p1s) (p2:p2s) | p1 <  p2  = True
+                         | p1 >  p2  = False
+                         | otherwise = leftOf p1s p2s
 
 -- determine if a position is right of another position
 rightOf :: Pos -> Pos -> Bool
 rightOf []       _        = False
 rightOf _        []       = False
-rightOf (p1:p1s) (p2:p2s) | p1 <  p2 = False
-                          | p1 >  p2 = True
-                          | p1 == p2 = rightOf p1s p2s
+rightOf (p1:p1s) (p2:p2s) | p1 <  p2  = False
+                          | p1 >  p2  = True
+                          | otherwise = rightOf p1s p2s
 
 -- select a partial term on a position
 selectAt :: Term -> Pos -> Term
 selectAt t             []     = t
-selectAt (Var v)       _      = error "The position you are looking for does not exist."
-selectAt (Comb c args) (p:ps) = selectAt (args !! (p-1)) ps
+selectAt (Var _)       _      = error "The position you are looking for does not exist."
+selectAt (Comb _ args) (p:ps) = selectAt (args !! (p-1)) ps
 
 -- replace a partial term on a position
 replaceAt :: Term -> Pos -> Term -> Term
-replaceAt t1            []     t2 = t2
-replaceAt (Var v)       _      t2 = error "The position you want to replace does not exist."
+replaceAt _             []     t2 = t2
+replaceAt (Var _)       _      _  = error "The position you want to replace does not exist."
 replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you want to replace does not exist."
                                   | otherwise       = (Comb c newArgs)
     where newArgs         = firstElements ++ replacedElement ++ lastElements
@@ -52,6 +52,6 @@ replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you wa
 
 -- return all positions of a term
 allPos :: Term -> [Pos]
-allPos (Var v) = [[]]
-allPos (Comb c args) = [] : concatMap helper [1..(length args)]
+allPos (Var _) = [[]]
+allPos (Comb _ args) = [] : concatMap helper [1..(length args)]
     where helper pos = map (pos:) (allPos $ args !! (pos-1))
