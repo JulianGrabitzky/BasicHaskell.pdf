@@ -28,7 +28,7 @@ reduceAt prog      term pos = case findRule prog (selectAt term pos) of
 reduciblePos :: Prog -> Term -> [Pos]
 reduciblePos (Prog []) _ = []
 -- take the first element of each tuple that is not Nothing
-reduciblePos prog term = fst $ unzip $ filter (\x -> isJust (snd x)) (positionAndRule)
+reduciblePos prog term = fst $ unzip $ filter (\x -> isJust (snd x)) positionAndRule
     where
         -- list of all positions of the term and possible rule
         positionAndRule = zip (allPos term) (map (findRule prog) subterms)
@@ -37,5 +37,4 @@ reduciblePos prog term = fst $ unzip $ filter (\x -> isJust (snd x)) (positionAn
 
 -- determine if a term is in its normal form
 isNormalForm :: Prog -> Term -> Bool
-isNormalForm prog term | reduciblePos prog term == 0 = True
-                       | otherwise = False
+isNormalForm = null reduciblePos
