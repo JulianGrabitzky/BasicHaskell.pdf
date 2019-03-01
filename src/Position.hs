@@ -7,17 +7,15 @@ type Pos = [Int]
 -- determine if a posiiton is below another
 -- regarding a common predecessor
 above :: Pos -> Pos -> Bool
-above p1 p2 | p1 == p2 = False
-above [] _  = True
 above _  [] = False
+above [] _  = True
 above (p1:p1s) (p2:p2s) | p1 /= p2  = False
                         | otherwise = above p1s p2s
 
 -- determine if a posiiton is below another
 -- regarding a common predecessor
 below :: Pos -> Pos -> Bool
-below p1 p2 | p1 == p2  = False
-            | otherwise = not (above p1 p2)
+below p1 p2 = above p2 p1
 
 -- determine if a position is left of another position
 leftOf :: Pos -> Pos -> Bool
@@ -56,4 +54,4 @@ replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you wa
 allPos :: Term -> [Pos]
 allPos (Var v) = [[]]
 allPos (Comb c args) = [] : concatMap helper [1..(length args)]
-    where helper pos = map (pos:) (allPos $ args !! pos-1)
+    where helper pos = map (pos:) (allPos $ args !! (pos-1))
