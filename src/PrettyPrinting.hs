@@ -13,7 +13,7 @@ instance Pretty Term where
       -- middle :: [String] -> [String]
       -- remove first and last element of a list
       middle [] = []
-      middle [x] = []
+      middle [_] = []
       middle xs = tail (init xs)
       -- prettyHelper :: [Term] -> String
       -- make a list look pretty
