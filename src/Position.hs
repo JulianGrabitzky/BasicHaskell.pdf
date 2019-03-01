@@ -56,4 +56,4 @@ replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you wa
 allPos :: Term -> [Pos]
 allPos (Var v) = [[]]
 allPos (Comb c args) = [] : concatMap helper [1..(length args)]
-    where helper pos = map (pos:) (allPos $ args !! (pos-1))
+    where helper pos = map (pos:) (allPos $ args !! pos-1)
