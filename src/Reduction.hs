@@ -7,15 +7,16 @@ import Substitution
 import Prog
 import Data.Maybe
 
--- make me pretty pls
-findRule :: Prog -> Term -> Maybe (Rhs, Subst)
-findRule (Prog [])                     term = Nothing
-findRule (Prog ((Rule left right):rs)) term | left == term = Just (right, substitution)
-                                            | otherwise    = findRule (Prog rs) term
-    where substitution = allOrNothing (match term right)
-          allOrNothing :: Maybe Subst -> Subst
-          allOrNothing Nothing      = error "No reduction rules found."
-          allOrNothing (Just subst) = subst
+
+findRule :: Prog -- List of rules
+         -> Term -- term to be replaced
+         -> Maybe (
+                Rhs, -- right side of matched rule
+                Subst) -- substitution from the left side of the rule to the term
+findRule (Prog [])                     _    = Nothing
+findRule (Prog ((Rule left right):rs)) term = case match left term of
+        Nothing  -> findRule (Prog rs) term
+        Just sub -> Just (right, sub)
 
 -- reduce the term at the given position
 reduceAt :: Prog -> Term -> Pos -> Maybe Term
@@ -37,4 +38,4 @@ reduciblePos prog term = fst $ unzip $ filter (\x -> isJust (snd x)) positionAnd
 
 -- determine if a term is in its normal form
 isNormalForm :: Prog -> Term -> Bool
-isNormalForm = null reduciblePos
+isNormalForm prog term = null $ reduciblePos prog term
