@@ -20,7 +20,6 @@ below p1 p2 | p1 == p2  = False
             | otherwise = not (above p1 p2)
 
 -- determine if a position is left of another position
--- assumption: positions on same level
 leftOf :: Pos -> Pos -> Bool
 leftOf []       _        = False
 leftOf _        []       = False
@@ -29,7 +28,6 @@ leftOf (p1:p1s) (p2:p2s) | p1 <  p2 = True
                          | p1 == p2 = leftOf p1s p2s
 
 -- determine if a position is right of another position
--- assumption: positions on same level
 rightOf :: Pos -> Pos -> Bool
 rightOf []       _        = False
 rightOf _        []       = False
@@ -50,7 +48,7 @@ replaceAt (Var v)       _      t2 = error "The position you want to replace does
 replaceAt (Comb c args) (p:ps) t  | length args < p = error "The position you want to replace does not exist."
                                   | otherwise       = (Comb c newArgs)
     where newArgs         = firstElements ++ replacedElement ++ lastElements
-          firstElements   = (take (p-1) args) 
+          firstElements   = (take (p-1) args)
           replacedElement = [replaceAt (args !! (p-1)) ps t]
           lastElements    = drop p args
 
