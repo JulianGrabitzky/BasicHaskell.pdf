@@ -55,8 +55,7 @@ executable FPP
                       Substitution,
                       Position,
                       Matching,
-                      Reduction,
-                      Strategy
+                      Reduction
 
   -- other-extensions:
   build-depends:      base,
