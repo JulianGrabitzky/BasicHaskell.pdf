@@ -74,7 +74,7 @@ test-suite tests
                       Position,
                       Reduction,
                       Prog,
-                      testPrettyPrinting
+                      TestPrettyPrinting
   build-depends:      base,
                       QuickCheck
   hs-source-dirs:     test,
