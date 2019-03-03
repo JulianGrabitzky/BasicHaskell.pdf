@@ -1,13 +1,17 @@
-module Evaluation where
+module Evaluation
+    (Strategy, loStrategy, liStrategy, roStrategy, riStrategy, poStrategy,
+     piStrategy)
+    where
 
 import Reduction
+import Position
+import Term
+import Prog
 
 -- Alias type for evaluation strategies.
 type Strategy = Prog -> Term -> [Pos]
 
 loStrategy :: Strategy
-loStrategy prog term | isNormalForm prog term = []
-                     | otherwise = []
 
 liStrategy :: Strategy
 
