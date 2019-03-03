@@ -1,0 +1,23 @@
+image: haskell:8
+
+stages:
+  - build
+  - test
+
+cabal-build:
+  stage: build
+  tags:
+    - my-runner
+  script:
+    - echo "this is building"
+    - cabal new-update
+    - cabal new-build
+
+cabal-test:
+  stage: test
+  tags:
+    - my-runner
+  script:
+    - echo "this is testing"
+    - cabal new-update
+    - cabal new-test
