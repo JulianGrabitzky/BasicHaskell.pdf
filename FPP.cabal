@@ -69,7 +69,6 @@ test-suite tests
   main-is:            Test.hs
   other-modules:      PrettyPrinting,
                       Term,
-                      Parser,
                       Prog,
                       Substitution,
                       Position,
