@@ -54,7 +54,7 @@ executable FPP
                       Prog,
                       Substitution,
                       Position,
-                      Match,
+                      Matching,
                       Reduction,
                       Strategy
 
