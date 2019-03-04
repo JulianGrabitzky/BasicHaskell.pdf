@@ -2,6 +2,9 @@
 module TestEvaluation where
 
 import Evaluation
+import Term
+import Prog
+
 import Test.QuickCheck
 
 prop_liStrategy :: Bool
