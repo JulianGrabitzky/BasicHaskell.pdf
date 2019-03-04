@@ -27,7 +27,7 @@ left2 = (Var "y")
 right2 = (Var "z")
 
 t1 = Comb "add" [(Var "x"), (Var "y")]
-t2 = Comb "add" [(Comb "mul" [(Var "a"), (Var "b"]), (Comb "div" [(Var "c"), (Var "d")])]
+t2 = Comb "add" [(Comb "mul" [(Var "a"), (Var "b")]), (Comb "div" [(Var "c"), (Var "d")])]
 
 return []
 testEvaluation :: IO Bool
