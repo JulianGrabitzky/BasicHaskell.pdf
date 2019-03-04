@@ -47,7 +47,7 @@ cabal-version:       >=1.10
 
 
 executable FPP
-  main-is:            Main.hs
+  main-is:            UI.hs
   other-modules:      PrettyPrinting,
                       Term,
                       Parser,
