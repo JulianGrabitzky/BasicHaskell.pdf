@@ -55,7 +55,8 @@ executable FPP
                       Substitution,
                       Position,
                       Matching,
-                      Reduction
+                      Reduction,
+                      Evaluation
 
   -- other-extensions:
   build-depends:      base,
@@ -74,7 +75,8 @@ test-suite tests
                       Position,
                       Matching,
                       Reduction,
-                      TestPrettyPrinting
+                      TestPrettyPrinting,
+                      TestEvaluation
 
   build-depends:      base,
                       QuickCheck
