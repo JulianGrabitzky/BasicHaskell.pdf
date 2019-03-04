@@ -23,7 +23,10 @@ firstContact state@(filePath, program, strategy) = do
       | take 2 userIn == ":q" || take 5 userIn == ":quit" -> -- bye bye
       | take 2 userIn == ":h" || take 5 userIn == ":help" -> sendHelp state
       | take 3 userIn == ":s " || take 5 userIn == ":set " -> -- set strat
-      | otherwise -> -- Es fehlt noch die Termevaluation und ungültige Eingabe?
+      | otherwise -> do
+        evaluationResult <- -- Es fehlt noch die Termevaluation und darin das Errorhandeling
+        putStr evaluationResult
+        firstContact state
 
 
 sendHelp :: State -> IO()
