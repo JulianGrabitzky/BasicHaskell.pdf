@@ -1,6 +1,6 @@
 module Evaluation
     (Strategy, loStrategy, liStrategy, roStrategy, riStrategy,
-     poStrategy, piStrategy)
+     poStrategy, piStrategy, reduceWith, evaluateWith)
     where
 
 import Reduction
@@ -54,9 +54,9 @@ createStrategy ab lr prog term | isNormalForm prog term = []
 
 -- apply one reduction with the given strategy
 reduceWith :: Strategy -> Prog -> Term -> Maybe Term
-reduceWith strat prog term = reduceWithHelper (Just term) posList
+reduceWith strat prog term = reduceWithHelper (Just term) reduPosList
     where
-      reduPosList = (strategy prog term)
+      reduPosList = (strat prog term)
       reduceWithHelper :: Maybe Term -> [Pos] -> Maybe Term
       reduceWithHelper Nothing  _  = Nothing
       reduceWithHelper (Just t) [] = (Just t)
@@ -68,6 +68,6 @@ evaluateWith strat prog term | isNormalForm prog term = term
                              | otherwise = evaluateWithHelper strat prog reducedTerm
     where
       reducedTerm = reduceWith strat prog term
-      evaluateWithHelper :: Strategy -> Prog -> Term -> Term
-      evaluateWithHelper strat prog (Just term) = evaluateWith strat prog term
-      evaluateWithHelper _     _    _           = error "Error in Evaluation.hs: evaluateWith failed!"
+      evaluateWithHelper :: Strategy -> Prog -> Maybe Term -> Term
+      evaluateWithHelper s p (Just t) = evaluateWith s p t
+      evaluateWithHelper _ _ _        = error "Error in Evaluation.hs: evaluateWith failed!"
