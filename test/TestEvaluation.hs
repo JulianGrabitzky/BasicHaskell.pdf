@@ -5,16 +5,16 @@ import Evaluation
 import Test.QuickCheck
 
 prop_liStrategy :: Bool
-prop_liStrategy = liStrategy program t1 = [[1]]
+prop_liStrategy = liStrategy program t1 == [[1]]
 
 prop_loStrategy :: Bool
-prop_loStrategy = loStrategy program t1 = [[]]
+prop_loStrategy = loStrategy program t1 == [[]]
 
 prop_riStrategy :: Bool
-prop_riStrategy = riStrategy program t1 = [[2]]
+prop_riStrategy = riStrategy program t1 == [[2]]
 
 prop_roStrategy :: Bool
-prop_roStrategy = roStrategy program t1 = [[]]
+prop_roStrategy = roStrategy program t1 == [[]]
 
 program = (Prog [r1, r2])
 r1 = (Rule left1 right1)
