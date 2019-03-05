@@ -7,9 +7,10 @@ import Substitution
 match :: Term -> Term -> Maybe Subst
 match (Var varName) term    = Just (single varName term)
 match (Comb _ _)    (Var _) = Nothing
-match (Comb combName1 list1) (Comb combName2 list2) | combName1    /= combName2    = Nothing
-                                                    | length list1 /= length list2 = Nothing
-                                                    | otherwise                    = foldl1 composeMaybeSubst (zipWith match list1 list2)
+match (Comb combName1 list1) (Comb combName2 list2) | combName1 == combName2 &&
+                                                      length list1 == length list2 =
+                                                      foldl composeMaybeSubst (Just identity) (zipWith match list1 list2)
+                                                    | otherwise = Nothing
 
 -- Compose two maybe subst
 composeMaybeSubst :: Maybe Subst -> Maybe Subst -> Maybe Subst
