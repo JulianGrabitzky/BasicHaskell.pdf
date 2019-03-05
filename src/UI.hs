@@ -16,7 +16,7 @@ main = do
 
 firstContact :: State -> IO()
 firstContact state@(filePath, _, _) = do
-    putStr $ filePath ++ "> "
+    putStr $ (getModuleName filePath) ++ "> "
     userIn <- getLine
     case userIn of
         u |        u == ":l"  ||        u == ":load"   -> unloadProgram state
@@ -26,6 +26,9 @@ firstContact state@(filePath, _, _) = do
           | take 2 u == ":h"  || take 5 u == ":help"   -> sendHelp state
           | take 3 u == ":s " || take 5 u == ":set "   -> setStrategy state (last $ words u)
           | otherwise -> evaluate state u
+
+getModuleName :: String -> String
+getModuleName str = reverse $ drop 3 $ reverse str
 
 -- evaluate a user input
 evaluate :: State -> String -> IO()
