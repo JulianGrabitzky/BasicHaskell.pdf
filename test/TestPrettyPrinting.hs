@@ -15,6 +15,9 @@ prop_CombWithList :: Bool
 prop_CombWithList = pretty (Comb "mul" [(Var "x"), (Comb "add" [(Var "y"), (Var "z"), (Var "w")])])
                     == "mul x (add y z w)"
 
+prop_CombWithEmptyList :: Bool
+prop_CombWithEmptyList = pretty (Comb "Succ" [Comb "Zero" []]) == "Succ Zero"
+
 return []
 
 testPretty :: IO Bool
