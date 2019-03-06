@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+module TestSubstitution where
 
 import Substitution
 import Term

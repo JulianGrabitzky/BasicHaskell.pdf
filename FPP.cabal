@@ -50,7 +50,7 @@ test-suite tests
                       Evaluation,
                       UI,
                       TestPrettyPrinting,
-                      testSubstitution,
+                      TestSubstitution,
                       TestEvaluation
 
   build-depends:      base,

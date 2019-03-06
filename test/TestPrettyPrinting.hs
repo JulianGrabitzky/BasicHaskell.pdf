@@ -19,6 +19,5 @@ prop_CombWithEmptyList :: Bool
 prop_CombWithEmptyList = pretty (Comb "Succ" [Comb "Zero" []]) == "Succ Zero"
 
 return []
-
 testPretty :: IO Bool
 testPretty = $quickCheckAll

@@ -2,7 +2,7 @@ module Test where
 
 import System.Exit
 import TestPrettyPrinting
-import testSubstitution
+import TestSubstitution
 import TestEvaluation
 
 -- With help from this site
