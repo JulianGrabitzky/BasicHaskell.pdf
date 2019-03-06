@@ -40,10 +40,14 @@ firstContact state@(filePath, _, _) = do
 
 -- Get the module name from file path.
 getModuleName :: String -> String
-getModuleName str = reverse $ drop 3 $ reverse str
+getModuleName ""  = ""
+getModuleName str = reverse $ drop 3 $ reverse (last (getDirectories str))
 
 -- Evaluate a user input.
 evaluate :: State -> String -> IO()
+evaluate state@(_, Prog [], _       ) _     = do
+  putStrLn "Please load a program or type :help for help"
+  firstContact state
 evaluate state@(_, program, strategy) input = do
   case parse input of
     (Left  _)
@@ -56,6 +60,7 @@ evaluate state@(_, program, strategy) input = do
 splitOn :: String -> Char -> [String]
 splitOn str char = groupBy (\_ b -> b /= char) str
 
+-- Split the file path into folders.
 getDirectories :: String -> [String]
 getDirectories str = (head dirs) : removeSlash (tail dirs)
  where
@@ -71,14 +76,20 @@ unloadProgram (filePath, _, strategy) = do
 
 -- Load a program from a user input.
 loadProgram :: State -> String -> IO()
-loadProgram state@(_, _, strategy) path = do
+loadProgram state@(_, _, strategy) input = do
   putStrLn $ "Loading " ++ path
   parsedFile <- parseFile path
   case parsedFile of
     (Left errorMsg)
       -> putStrLn errorMsg >> firstContact state
     (Right newProgram)
-      -> putStrLn "loaded." >> firstContact (path, newProgram, strategy)
+      -> firstContact (path, newProgram, strategy)
+ where
+  path = addEnding input
+  -- Add the ".hs" to the file path in case it is not there.
+  addEnding :: String -> String
+  addEnding str | (take 3 $ reverse str) == "sh." = str
+                | otherwise                       = str ++ ".hs"
 
 -- Reload a program.
 reloadProgram :: State -> IO()
