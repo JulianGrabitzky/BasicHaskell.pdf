@@ -1,4 +1,4 @@
-module UI where
+module UI (start) where
 
 import Data.List
 import Evaluation
@@ -9,9 +9,8 @@ import Prog
 type State = (FilePath, Prog, Strategy)
 
 -- Main finction for user input.
-main :: IO()
-main = do
-  putStrLn "Welcome to Simple Haskell!"
+start :: IO()
+start = do
   putStrLn "Type :help for help."
   firstContact ( "", Prog [], loStrategy)
 
@@ -35,6 +34,8 @@ firstContact state@(filePath, _, _) = do
       -> sendHelp state
       | take 3 u == ":s " || take 5 u == ":set "
       -> setStrategy state (last $ words u)
+      |        u == ""
+      -> firstContact state
       | otherwise
       -> evaluate state u
 
@@ -46,6 +47,7 @@ getModuleName str = reverse $ drop 3 $ reverse (last (getDirectories str))
 -- Evaluate a user input.
 evaluate :: State -> String -> IO()
 evaluate state@(_, Prog [], _       ) _     = do
+  putStrLn "Unknown command."
   putStrLn "Please load a program or type :help for help"
   firstContact state
 evaluate state@(_, program, strategy) input = do
