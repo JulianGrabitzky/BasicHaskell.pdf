@@ -19,7 +19,7 @@ prop_riStrategy = riStrategy program t1 == [[2]]
 prop_roStrategy :: Bool
 prop_roStrategy = roStrategy program t1 == [[]]
 
-program :: Term
+program :: Prog
 program = (Prog [r1, r2])
 
 r1 :: Rule
