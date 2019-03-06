@@ -14,7 +14,7 @@ instance Pretty Term where
   pretty (Comb name [])   = name
   pretty (Comb name list) = name ++ " " ++ (prettyList list)
    where
-    prettyHelper :: [Term] -> String
+    prettyHelper :: Term -> String
     prettyHelper (Var varName)
       = varName
     prettyHelper (Comb varName [])

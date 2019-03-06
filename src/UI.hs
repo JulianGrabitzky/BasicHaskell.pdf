@@ -46,7 +46,7 @@ getModuleName str = reverse $ drop 3 $ reverse str
 evaluate :: State -> String -> IO()
 evaluate state@(_, program, strategy) input = do
   case parse input of
-    (Left  errorMsg)
+    (Left  _)
       -> putStrLn "Invalid input for evaluation" >> firstContact state
     (Right term)
       -> (putStrLn $ pretty $ evaluateWith strategy program term)
@@ -55,6 +55,13 @@ evaluate state@(_, program, strategy) input = do
 -- Split a string on a given character.
 splitOn :: String -> Char -> [String]
 splitOn str char = groupBy (\_ b -> b /= char) str
+
+getDirectories :: String -> [String]
+getDirectories str = (head dirs) : removeSlash (tail dirs)
+ where
+  dirs = splitOn str '/'
+  removeSlash :: [String] -> [String]
+  removeSlash strs = map (drop 1) strs
 
 -- Unload a program.
 unloadProgram :: State -> IO()
