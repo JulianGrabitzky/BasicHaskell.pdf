@@ -2,7 +2,7 @@ image: haskell:8
 
 cache:
   paths:
-    - cabal-cache
+    - cache
 
 # https://gitlab.com/dxld/cabal-helper/blob/master/.gitlab-ci.yml
 before_script:
