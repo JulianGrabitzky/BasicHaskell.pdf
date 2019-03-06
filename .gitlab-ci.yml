@@ -1,20 +1,22 @@
 image: haskell:8
 
-# Based on Code from 
+# -----------------------------------------------------------------
+# Based on Code from
 # https://git.informatik.uni-kiel.de/stu210876/fortprog-haskellception/blob/master/.gitlab-ci.yml
 cache:
   paths:
     - cabal-cache
 
-stages:
-  - build
-  - test
 
 # https://gitlab.com/dxld/cabal-helper/blob/master/.gitlab-ci.yml
 before_script:
   - mkdir -p ~/.cabal $(pwd)/cabal-cache/store
   - ln -s $(pwd)/cabal-cache/store ~/.cabal/store
+# -----------------------------------------------------------------
 
+stages:
+  - build
+  - test
 
 stages:
   - build
