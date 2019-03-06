@@ -2,6 +2,7 @@ module Test where
 
 import System.Exit
 import TestPrettyPrinting
+import testSubstitution
 import TestEvaluation
 
 -- With help from this site
@@ -11,6 +12,7 @@ main :: IO()
 main = do
     good <- and <$> sequence
         [testPretty,
-        testEvaluation]
+         testSubstitution,
+         testEvaluation]
     if good then exitSuccess
             else exitFailure

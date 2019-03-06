@@ -25,4 +25,5 @@ prop_composeWith2Subs = apply (compose (single "x" (Var "1")) (single "y" (Var "
                         == apply (single "y" (Var "2")) (apply (single "x" (Var "1")) (Comb "add" [(Var "x"), (Var "y")]))
 
 return []
-testAll = $quickCheckAll
+testSubstitution :: IO Bool
+testSubstitution = $quickCheckAll
