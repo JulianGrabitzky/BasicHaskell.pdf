@@ -36,6 +36,12 @@ f3 Zero h3 = Zero
 h3 = h3
 g3 = Zero
 
+-- > f4 h4 g4 h4
+-- terminate with po
+-- but not with ro
+f4 a g4 b = Zero
+g4 = Zero
+h4 = h4
 
 
 -- > h5
