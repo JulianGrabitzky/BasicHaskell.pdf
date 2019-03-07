@@ -9,7 +9,7 @@ match (Var varName) term         = Just (single varName term)
 match (Comb _ _)    (Var _)      = Nothing
 match (Comb c1 l1)  (Comb c2 l2)
   | c1 == c2 && length l1 == length l2
-  =  foldl composeMaybeSubst (Just identity) (zipWith match l1 l2)
+  = foldl composeMaybeSubst (Just identity) (zipWith match l1 l2)
   | otherwise
   = Nothing
 
