@@ -36,6 +36,5 @@ f3 Zero h3 = Zero
 h3 = h3
 g3 = Zero
 
--- f5 g5 g5 = True
--- g5 = h5
--- h5 = g5
+-- > h5
+h5 = h5

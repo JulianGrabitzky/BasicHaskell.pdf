@@ -10,9 +10,9 @@ import Term
 -- Find a rule for a term in a given program.
 findRule :: Prog  -- ^ List of rules
          -> Term  -- ^ Term to be replaced
-         -> Maybe (
-              Rhs,   -- ^ Right side of matched rule
-              Subst  -- ^ Substitution from the rules' left side to the term
+         -> Maybe
+            ( Rhs   -- ^ Right side of matched rule
+            , Subst  -- ^ Substitution from the rules' left side to the term
             )
 findRule (Prog [])                     _    = Nothing
 findRule (Prog ((Rule left right):rs)) term = case match left term of
