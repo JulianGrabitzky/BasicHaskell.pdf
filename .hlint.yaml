@@ -1,0 +1,5 @@
+# Config from https://github.com/ndmitchell/hlint
+
+- ignore: {within: Prog}
+- ignore: {within: Parser}
+- ignore: {within: Term}
