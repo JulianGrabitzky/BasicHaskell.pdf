@@ -11,7 +11,7 @@ return []
 testAll = $quickCheck
 
 
-t = Comb "mul" [Var "x", (Comb "add" [Var "y", Var "z", Var "w"])]
+t = Comb "mul" [Var "x", Comb "add" [Var "y", Var "z", Var "w"]]
 
 program = Prog [r1, r2]
 
