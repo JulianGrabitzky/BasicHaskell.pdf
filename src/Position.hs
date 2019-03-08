@@ -49,10 +49,10 @@ replaceAt (Comb c args) (p:ps) t  | length args < p
                                   = error
                                     "The position you want to replace does not exist."
                                   | otherwise
-                                  = (Comb c newArgs)
+                                  = Comb c newArgs
  where
   newArgs         = firstElements ++ replacedElement ++ lastElements
-  firstElements   = (take (p-1) args)
+  firstElements   = take (p-1) args
   replacedElement = [replaceAt (args !! (p-1)) ps t]
   lastElements    = drop p args
 

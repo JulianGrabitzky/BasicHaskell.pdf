@@ -15,7 +15,7 @@ findRule :: Prog  -- ^ List of rules
             , Subst  -- ^ Substitution from the rules' left side to the term
             )
 findRule (Prog [])                     _    = Nothing
-findRule (Prog ((Rule left right):rs)) term = case match left term of
+findRule (Prog (Rule left right:rs)) term = case match left term of
   Nothing  -> findRule (Prog rs) term
   Just sub -> Just (right, sub)
 
@@ -31,7 +31,7 @@ reduciblePos :: Prog -> Term -> [Pos]
 reduciblePos (Prog []) _    = []
 -- Take the first element of each tuple that is not Nothing.
 reduciblePos prog      term
-  = fst $ unzip $ filter (\x -> isJust (snd x)) positionAndRule
+  = map fst (filter (isJust . snd) positionAndRule)
  where
   -- List of all positions of the term and possible rule.
   positionAndRule = zip (allPos term) (map (findRule prog) subterms)

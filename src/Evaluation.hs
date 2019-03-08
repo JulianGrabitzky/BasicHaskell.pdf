@@ -66,17 +66,17 @@ createStrategy ab lr prog term
  where
   helper :: Pos -> [Pos] -> Pos
   helper p1 [] = p1
-  helper p1 (p2:ps) | (ab p1 p2) || (lr p1 p2) = helper p1 ps
+  helper p1 (p2:ps) | ab p1 p2 || lr p1 p2 = helper p1 ps
                     | otherwise                = helper p2 ps
 
 -- Apply one reduction with the given strategy.
 reduceWith :: Strategy -> Prog -> Term -> Maybe Term
 reduceWith strat prog term = reduceWithHelper (Just term) reduPosList
  where
-  reduPosList = (strat prog term)
+  reduPosList = strat prog term
   reduceWithHelper :: Maybe Term -> [Pos] -> Maybe Term
   reduceWithHelper Nothing  _  = Nothing
-  reduceWithHelper (Just t) [] = (Just t)
+  reduceWithHelper (Just t) [] = Just t
   reduceWithHelper (Just t) (p:ps) = reduceWithHelper (reduceAt prog t p) ps
 
 -- Reduce the term with the given strategy until it reached normal form.
@@ -89,5 +89,5 @@ evaluateWith strat prog term
   evaluateWithHelper :: Strategy -> Prog -> Maybe Term -> Term
   evaluateWithHelper s p (Just t)
     = evaluateWith s p t
-  evaluateWithHelper _ _ _        
+  evaluateWithHelper _ _ _
     = error "Error in Evaluation.hs: evaluateWith failed!"

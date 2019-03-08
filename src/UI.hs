@@ -19,7 +19,7 @@ start = do
 -- the corresponding function.
 firstContact :: State -> IO()
 firstContact state@(filePath, _, _) = do
-  putStr $ (getModuleName filePath) ++ "> "
+  putStr $ getModuleName filePath ++ "> "
   userIn <- getLine
   case userIn of
     u |        u == ":l"  ||        u == ":load"
@@ -50,12 +50,12 @@ evaluate state@(_, Prog [], _       ) _     = do
   putStrLn "Unknown command."
   putStrLn "Please load a program or type :help for help"
   firstContact state
-evaluate state@(_, program, strategy) input = do
+evaluate state@(_, program, strategy) input =
   case parse input of
     (Left  _)
       -> putStrLn "Invalid input for evaluation" >> firstContact state
     (Right term)
-      -> (putStrLn $ pretty $ evaluateWith strategy program term)
+      -> putStrLn (pretty $ evaluateWith strategy program term)
          >> firstContact state
 
 -- Split a string on a given character.
@@ -64,11 +64,11 @@ splitOn str char = groupBy (\_ b -> b /= char) str
 
 -- Split the file path into folders.
 getDirectories :: String -> [String]
-getDirectories str = (head dirs) : removeSlash (tail dirs)
+getDirectories str = head dirs : removeSlash (tail dirs)
  where
   dirs = splitOn str '/'
   removeSlash :: [String] -> [String]
-  removeSlash strs = map (drop 1) strs
+  removeSlash = map (drop 1)
 
 -- Unload a program.
 unloadProgram :: State -> IO()
@@ -90,7 +90,7 @@ loadProgram state@(_, _, strategy) input = do
   path = addEnding input
   -- Add the ".hs" to the file path in case it is not there.
   addEnding :: String -> String
-  addEnding str | (take 3 $ reverse str) == "sh." = str
+  addEnding str | take 3 (reverse str) == "sh." = str
                 | otherwise                       = str ++ ".hs"
 
 -- Reload a program.

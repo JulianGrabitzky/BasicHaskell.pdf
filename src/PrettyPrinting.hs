@@ -12,12 +12,12 @@ class Pretty a where
 instance Pretty Term where
   pretty (Var name)       = name
   pretty (Comb name [])   = name
-  pretty (Comb name list) = name ++ " " ++ (prettyList list)
+  pretty (Comb name list) = name ++ " " ++ prettyList list
    where
     prettyHelper :: Term -> String
     prettyHelper (Var  varName)       = varName
     prettyHelper (Comb varName [])    = varName
     prettyHelper (Comb combName args) =
-      "(" ++ combName ++ " " ++ (prettyList args) ++ ")"
+      "(" ++ combName ++ " " ++ prettyList args ++ ")"
     prettyList :: [Term] -> String
     prettyList args = unwords (map prettyHelper args)

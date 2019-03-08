@@ -7,11 +7,11 @@ type Subst = (VarName -> Term)
 
 -- Return the substitution itself.
 identity :: Subst
-identity = \x -> (Var x)
+identity = Var
 
 -- Substitute a variable with a term.
 single :: VarName -> Term -> Subst
-single varName term = (\x -> if x == varName then term else Var x)
+single varName term x = if x == varName then term else Var x
 
 -- Apply a Substitution to a term.
 apply :: Subst -> Term -> Term
@@ -20,4 +20,4 @@ apply sub (Comb combName list) = Comb combName (map (apply sub) list)
 
 -- Apply two substitutions one after another.
 compose :: Subst -> Subst -> Subst
-compose s1 s2 = \varName -> apply s2 (s1 varName)
+compose s1 s2 = apply s2 . s1
