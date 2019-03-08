@@ -3,4 +3,4 @@
 - ignore: {within: Prog}
 - ignore: {within: Parser}
 - ignore: {within: Term}
-- ignore: {within: ../test/}
+- ignore: {within: test/}
