@@ -27,7 +27,7 @@ cabal-build:
   tags:
     - my-runner
   script:
-    - echo "this is building"
+    - echo "Building"
     - cabal new-update
     - cabal new-build
 
@@ -36,6 +36,14 @@ cabal-test:
   tags:
     - my-runner
   script:
-    - echo "this is testing"
+    - echo "Testing"
     - cabal new-update
     - cabal new-test
+
+cabal-lint:
+  stage: test
+  tags:
+    - my-runner
+  script:
+    - echo "Linting"
+    - curl -sSL https://raw.github.com/ndmitchell/hlint/master/misc/run.sh | sh -s .
